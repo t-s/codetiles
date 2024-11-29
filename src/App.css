@@ -8,8 +8,8 @@
     background-color: rgb(219 234 254); /* bg-blue-100 */
   }
   50% {
-    transform: scale(1.05);
-    background-color: rgb(191 219 254); /* bg-blue-200 */
+    transform: scale(1.2); /* Made larger for testing */
+    background-color: rgb(37 99 235); /* Made much darker blue for testing */
   }
   100% {
     transform: scale(1);
@@ -18,7 +18,7 @@
 }
 
 .drop-animation {
-  animation: dropPop 0.3s ease-in-out;
+  animation: dropPop 0.5s ease-in-out;
 }
 
 /* Fade in animation for success message */

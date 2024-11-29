@@ -40,9 +40,11 @@ const CodeTiles = () => {
   // Reset the animation flag after animation completes
   useEffect(() => {
     if (lastDroppedIndex !== null) {
+      console.log('Animation started for index:', lastDroppedIndex); // Debug log
       const timer = setTimeout(() => {
+        console.log('Resetting animation for index:', lastDroppedIndex); // Debug log
         setLastDroppedIndex(null);
-      }, 300); // Match animation duration
+      }, 500); // Match animation duration
       return () => clearTimeout(timer);
     }
   }, [lastDroppedIndex]);
@@ -90,6 +92,9 @@ const CodeTiles = () => {
 
       const newBlocks = blocks.filter((_, index) => index !== source.index);
 
+      // Add console.log for debugging
+      console.log('Setting lastDroppedIndex to:', slotIndex);
+      
       setSlots(newSlots);
       setBlocks(newBlocks);
       setLastDroppedIndex(slotIndex);
@@ -173,20 +178,25 @@ const CodeTiles = () => {
                           draggableId={`slot-content-${index}`}
                           index={0}
                         >
-                          {(provided, snapshot) => (
-                            <div
-                              ref={provided.innerRef}
-                              {...provided.draggableProps}
-                              {...provided.dragHandleProps}
-                              className={`h-full p-2 font-mono text-sm rounded-md transition-all duration-200
-                                ${snapshot.isDragging ? 'dragging bg-blue-100' : 'bg-blue-50'}
-                                ${lastDroppedIndex === index ? 'drop-animation' : ''}
-                                transform ${snapshot.isDragging ? 'scale-105' : 'scale-100'}
-                              `}
-                            >
-                              {slot.content.content}
-                            </div>
-                          )}
+                          {(provided, snapshot) => {
+                            const isJustDropped = lastDroppedIndex === index;
+                            console.log(`Slot ${index} isJustDropped:`, isJustDropped); // Debug log
+                            
+                            return (
+                              <div
+                                ref={provided.innerRef}
+                                {...provided.draggableProps}
+                                {...provided.dragHandleProps}
+                                className={`h-full p-2 font-mono text-sm rounded-md
+                                  ${snapshot.isDragging ? 'dragging bg-blue-100' : 'bg-blue-50'}
+                                  ${isJustDropped ? 'drop-animation' : ''}
+                                `}
+                                key={isJustDropped ? 'dropping' : 'static'}
+                              >
+                                {slot.content.content}
+                              </div>
+                            );
+                          }}
                         </Draggable>
                       ) : (
                         <div className="h-full p-2 text-gray-500 text-sm flex items-center justify-center">
