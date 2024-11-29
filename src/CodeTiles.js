@@ -187,7 +187,9 @@ const CodeTiles = () => {
             </div>
 
             <div className="mt-8">
-              <h3 className="font-semibold text-sm text-gray-600 mb-2 text-center">Available Code Blocks:</h3>
+              {blocks.length > 0 && (
+                <h3 className="font-semibold text-sm text-gray-600 mb-2 text-center">Available Code Blocks:</h3>
+              )}
               <Droppable droppableId="block-list">
                 {(provided, snapshot) => (
                   <div
