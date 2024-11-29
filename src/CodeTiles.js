@@ -19,6 +19,7 @@ const CodeTiles = () => {
 
   const [message, setMessage] = useState('');
   const [showConfetti, setShowConfetti] = useState(false);
+  const [lastDroppedIndex, setLastDroppedIndex] = useState(null);
   const [windowSize, setWindowSize] = useState({
     width: window.innerWidth,
     height: window.innerHeight,
@@ -36,6 +37,16 @@ const CodeTiles = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Reset the animation flag after animation completes
+  useEffect(() => {
+    if (lastDroppedIndex !== null) {
+      const timer = setTimeout(() => {
+        setLastDroppedIndex(null);
+      }, 300); // Match animation duration
+      return () => clearTimeout(timer);
+    }
+  }, [lastDroppedIndex]);
+
   const checkSolution = (currentSlots) => {
     const solution = [
       'function factorial(n) {',
@@ -51,7 +62,7 @@ const CodeTiles = () => {
     if (isCorrect) {
       setMessage('🎉 Congratulations! You\'ve built a working factorial function!');
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 5000); // Stop confetti after 5 seconds
+      setTimeout(() => setShowConfetti(false), 5000);
     }
   };
 
@@ -81,6 +92,7 @@ const CodeTiles = () => {
 
       setSlots(newSlots);
       setBlocks(newBlocks);
+      setLastDroppedIndex(slotIndex);
       checkSolution(newSlots);
     }
 
@@ -116,6 +128,7 @@ const CodeTiles = () => {
     ].sort(() => Math.random() - 0.5));
     setMessage('');
     setShowConfetti(false);
+    setLastDroppedIndex(null);
   };
 
   return (
@@ -167,6 +180,7 @@ const CodeTiles = () => {
                               {...provided.dragHandleProps}
                               className={`h-full p-2 font-mono text-sm rounded-md transition-all duration-200
                                 ${snapshot.isDragging ? 'dragging bg-blue-100' : 'bg-blue-50'}
+                                ${lastDroppedIndex === index ? 'drop-animation' : ''}
                                 transform ${snapshot.isDragging ? 'scale-105' : 'scale-100'}
                               `}
                             >

@@ -2,7 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Custom animation for success message fade-in */
+@keyframes dropPop {
+  0% {
+    transform: scale(1);
+    background-color: rgb(219 234 254); /* bg-blue-100 */
+  }
+  50% {
+    transform: scale(1.05);
+    background-color: rgb(191 219 254); /* bg-blue-200 */
+  }
+  100% {
+    transform: scale(1);
+    background-color: rgb(239 246 255); /* bg-blue-50 */
+  }
+}
+
+.drop-animation {
+  animation: dropPop 0.3s ease-in-out;
+}
+
+/* Fade in animation for success message */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -26,4 +45,8 @@
 .drop-target {
   @apply border-blue-400 bg-blue-50;
   transition: all 0.2s ease;
+}
+
+.App {
+  text-align: center;
 }
