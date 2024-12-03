@@ -92,9 +92,6 @@ const CodeTiles = () => {
 
       const newBlocks = blocks.filter((_, index) => index !== source.index);
 
-      // Add console.log for debugging
-      console.log('Setting lastDroppedIndex to:', slotIndex);
-      
       setSlots(newSlots);
       setBlocks(newBlocks);
       setLastDroppedIndex(slotIndex);
