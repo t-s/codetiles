@@ -54,9 +54,12 @@ const CodeTiles = () => {
       'function factorial(n) {',
       '  if (n <= 1) return 1;',
       '  return n * factorial(n - 1);',
-      '}'
+      '}',
+      'function deepClone(obj) {',
+      '  return Object.keys(obj).reduce((clone, key) => {',
+      '    clone[key] = typeof obj[key] === "object" ? deepClone(obj[key]) : obj[key]; }, {});',
+      '}',
     ];
-
     const isCorrect = currentSlots.every((slot, index) => 
       slot.content?.content === solution[index]
     );
@@ -92,6 +95,9 @@ const CodeTiles = () => {
 
       const newBlocks = blocks.filter((_, index) => index !== source.index);
 
+      // Add console.log for debugging
+      console.log('Setting lastDroppedIndex to:', slotIndex);
+      
       setSlots(newSlots);
       setBlocks(newBlocks);
       setLastDroppedIndex(slotIndex);
