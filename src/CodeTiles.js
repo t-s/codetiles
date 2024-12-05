@@ -15,6 +15,10 @@ const CodeTiles = () => {
     { id: 'block-2', content: '  if (n <= 1) return 1;' },
     { id: 'block-3', content: '  return n * factorial(n - 1);' },
     { id: 'block-4', content: '}' }
+    { id: 'block-5', content: 'function deepClone(obj) {'}, 
+    { id: 'block-6', content:   '  return Object.keys(obj).reduce((clone, key) => {'},
+    { id: 'block-7', content:   '    clone[key] = typeof obj[key] === "object" ? deepClone(obj[key]) : obj[key]; }, {});',
+      '}'},
   ].sort(() => Math.random() - 0.5));
 
   const [message, setMessage] = useState('');
